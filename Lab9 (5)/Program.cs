@@ -1,4 +1,4 @@
-﻿using Lab9__5_.Tree;
+using Lab9__5_.Tree;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,14 +55,13 @@ namespace Lab9__5_
                 {
                     game.scoreFirstTeam = random.Next(0, 3);
                     game.scoreSecondTeam = random.Next(0, 3);
-                    CheckDraw(game.scoreFirstTeam,game.scoreSecondTeam,game,random);
-                    /*if (game.scoreFirstTeam == game.scoreSecondTeam)
+                    if (game.scoreFirstTeam == game.scoreSecondTeam)
                     {
-                        
                         Draw(random, ref A,ref B);
                         game.penaltsFirstTeam = A;
                         game.penaltsSecondTeam = B;
-                    }*/
+                        
+                    }
                 }
                 else
                 {
@@ -70,10 +69,10 @@ namespace Lab9__5_
                     game.scoreSecondTeam = random.Next(0, 8);
                     if (game.scoreFirstTeam == game.scoreSecondTeam)
                     {
-
                         Draw(random, ref A, ref B);
                         game.penaltsFirstTeam = A;
                         game.penaltsSecondTeam = B;
+                        
                     }
                 }
                 games[i] = game;
@@ -96,12 +95,10 @@ namespace Lab9__5_
                 node[j] = tree.AddRight(node[i], empty);
                 j++;
             }
-
             for (int i = node.Length - 1, j = games.Length - 1; j > -1; i--, j--)
             {
                 node[i].data = games[j];
             }
-
             for (int i = 6; i > -1; i--)
             {
                 node[i].data = ResultOfNextGame(node[i].left.data, node[i].right.data, random);
@@ -129,8 +126,18 @@ namespace Lab9__5_
                 Draw(random, ref A, ref B);
                 game.penaltsFirstTeam = A;
                 game.penaltsSecondTeam = B;
-                if (A > B) { FirstTeam = game.firstTeam;  } else { FirstTeam = game.secondTeam; }
+                if (game.penaltsFirstTeam > game.penaltsSecondTeam)
+                {
+                    FirstTeam = game.firstTeam;
+                }
+                else
+                {
+                    FirstTeam = game.secondTeam;
+                }
+                
             }
+            A = -1;
+            B = -1;
             if (game1.scoreFirstTeam > game1.scoreSecondTeam)
             {
                 SecondTeam = game1.firstTeam;
@@ -144,8 +151,18 @@ namespace Lab9__5_
                 Draw(random, ref A, ref B);
                 game1.penaltsFirstTeam = A;
                 game1.penaltsSecondTeam = B;
-                if (A > B) { SecondTeam = game1.firstTeam;  } else { SecondTeam = game1.secondTeam; }
+                if (game1.penaltsFirstTeam > game1.penaltsSecondTeam)
+                {
+                    SecondTeam = game1.firstTeam;
+                }
+                else
+                {
+                    SecondTeam = game1.secondTeam;
+                }
+                Console.WriteLine(A + "," + B + "=2");
             }
+            A = -1;
+            B = -1;
             Game NextMatch;
             NextMatch.firstTeam = FirstTeam;
             NextMatch.secondTeam = SecondTeam;
@@ -206,18 +223,6 @@ namespace Lab9__5_
                     A += A2;
                     B += B2;
                 }
-            }
-            
-        }
-        static void CheckDraw(int first,int second,Game game,Random random)
-        {
-            int A = -1, B = -1;
-            if (first == second)
-            {
-
-                Draw(random, ref A, ref B);
-                game.penaltsFirstTeam = A;
-                game.penaltsSecondTeam = B;
             }
         }
     }
